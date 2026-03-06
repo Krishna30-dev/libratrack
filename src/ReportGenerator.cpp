@@ -9,7 +9,7 @@ std::vector<Book> ReportGenerator::getMostBorrowedBooks(
 {
     std::vector<Book> sorted = books;
     std::sort(sorted.begin(), sorted.end(), [](const Book& a, const Book& b) {
-        return a.getBorrowCount() < b.getBorrowCount();
+        return a.getBorrowCount() > b.getBorrowCount();
     });
     int count = std::min(n, static_cast<int>(sorted.size()));
     return std::vector<Book>(sorted.begin(), sorted.begin() + count);

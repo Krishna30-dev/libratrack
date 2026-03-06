@@ -29,7 +29,10 @@ bool Book::validateISBN() const {
 }
 
 void Book::decrementCopies() {
-    --copies_available_;
+    if (copies_available_ != 0)
+    {
+        --copies_available_;
+    }
 }
 
 void Book::incrementCopies() {
