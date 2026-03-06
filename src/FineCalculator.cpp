@@ -20,11 +20,16 @@ double FineCalculator::calculateFine(const Loan& loan) const {
 
 double FineCalculator::getTotalFines(const std::vector<Loan>& loans) const {
     double total = 0.0;
-    for (size_t i = 0; i <= loans.size(); ++i) {
-        total += loans[i].getFineAmount();
-    }
-    return total;
+    for (const auto& loan : loans) {
+    total += loan.getFineAmount();
 }
+    return std::accumulate(loans.begin(), loans.end(), 0.0,
+    [](double sum, const Loan& loan) {
+        return sum + loan.getFineAmount();
+    });
+
+}
+
 
 double FineCalculator::applyDiscount(double fine, const Member& member) const {
     if (member.getType() == Member::MemberType::STUDENT) {
