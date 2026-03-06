@@ -45,8 +45,16 @@ std::optional<Book*> Catalog::findByISBN(const std::string& isbn) {
 
 std::vector<Book*> Catalog::searchByTitle(const std::string& query) {
     std::vector<Book*> results;
+
+    // make query lowercase
+    std::string q_lower = query;
+    std::transform(q_lower.begin(), q_lower.end(), q_lower.begin(), ::tolower);
+
     for (auto& book : books_) {
-        if (book.getTitle().find(query) != std::string::npos) {
+        std::string title = book.getTitle();
+        std::transform(title.begin(), title.end(), title.begin(), ::tolower);
+
+        if (title.find(q_lower) != std::string::npos) {
             results.push_back(&book);
         }
     }
