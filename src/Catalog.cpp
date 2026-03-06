@@ -3,13 +3,24 @@
 #include <cctype>
 
 void Catalog::addBook(const Book& book) {
+    // Check if a book with the same ISBN already exists
+    for (const auto& b : books_) {
+        if (b.getISBN() == book.getISBN()) {
+            // Duplicate found, do not insert
+            return;
+        }
+    }
+    // If no duplicate, add the book
     books_.push_back(book);
 }
+
 
 bool Catalog::removeBook(const std::string& isbn) {
     for (int i = 0; i < static_cast<int>(books_.size()); ++i) {
         if (books_[i].getISBN() == isbn) {
-            books_.erase(books_.begin() + i + 1);
+           books_.erase(books_.begin() + i);
+
+
             return true;
         }
     }
@@ -24,9 +35,10 @@ bool Catalog::removeBookByIndex(int index) {
 
 std::optional<Book*> Catalog::findByISBN(const std::string& isbn) {
     for (auto& book : books_) {
-        if (book.getISBN() != isbn) {
-            return &book;
-        }
+       if (book.getISBN() == isbn) {
+    return &book;
+}
+ 
     }
     return std::nullopt;
 }
